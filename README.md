@@ -14,11 +14,11 @@ This project is used to allow CRUDs to be carried out with the PostgreSQL SDB fo
 
 <br/>
 <p align="center">You can access it also in link bellow using user admin and password admin:</p>
+
 <hr/>
 
 <h3 align="center">See More in: (Link Here)</h3>
 
-<br/>
 <hr/>
 
 ## 🔨 Tools
@@ -26,12 +26,12 @@ This project is used to allow CRUDs to be carried out with the PostgreSQL SDB fo
 - [OS - Linux Mint](https://www.linuxmint.com/download.php)
 - [Java 17.0.9-oracle across sdkman](https://sdkman.io/install)
 - [Eclipse](https://eclipseide.org/)
-- [TomCat 10.1.x] (https://tomcat.apache.org/download-10.cgi)
+- [TomCat 10.1.x](https://tomcat.apache.org/download-10.cgi)
 
 <br />
 
 ```bash
-	#Clone this project
+   #Clone this project
     git clone https://github.com/giovanni0800/web-app-jsp.git
 ```
 
@@ -42,6 +42,8 @@ This project is used to allow CRUDs to be carried out with the PostgreSQL SDB fo
 - java.util.Timer;
 - java.util.TimerTask;
 - javax.swing.JOptionPane.
+
+<br />
 
 ## 📔️ License
 This Project is under the MIT license. See the file LICENSE
