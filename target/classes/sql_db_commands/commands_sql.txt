@@ -1,0 +1,17 @@
+CREATE DATABASE "first_jsp_db"
+	WITH OWNER = postgres
+		ENCODING = 'UTF-8'
+		TABLESPACE = pg_default
+		CONNECTION LIMIT = -1;
+		
+-----------------------------------------------------------------------------------
+
+CREATE TABLE public.model_login(
+login character varying(200),
+password character varying(200),
+CONSTRAINT unique_login UNIQUE (login)
+);
+
+-----------------------------------------------------------------------------------
+
+insert into model_login (login, password) values ('admin', 'admin');
