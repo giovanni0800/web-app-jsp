@@ -9,9 +9,9 @@ public class SingleConnectionDb {
 	private static final String FOREGROUND_COLOR_YELLOW = "\u001B[33m";
 	private static final String FOREGROUND_COLOR_RESET = "\u001B[0m";
 
-	private static final String DATABASEURL = "postgresql://postgres:1A5EAggc5BbEec-f5f5bf4fFg116-aC2@monorail.proxy.rlwy.net:14293/railway?" + "autoReconnect=true";
+	private static final String DATABASEURL = "jdbc:postgresql://localhost:5432/first_jsp_db?" + "autoReconnect=true";
 	private static final String USER = "postgres";
-	private static final String PASSWORD = "1A5EAggc5BbEec-f5f5bf4fFg116-aC2";
+	private static final String PASSWORD = "psql2024!c";
 
 	private static Connection connection = null;
 
