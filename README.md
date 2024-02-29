@@ -27,7 +27,7 @@ This project is used to allow CRUDs to be carried out with the PostgreSQL SDB fo
 - [Java 17.0.9-oracle across sdkman](https://sdkman.io/install)
 - [Eclipse](https://eclipseide.org/)
 - [TomCat 10.1.x](https://tomcat.apache.org/download-10.cgi)
-- [PostgreSQL](https://www.postgresql.org/)
+- [PostgreSQL 14.11](https://www.postgresql.org/)
 
 <br />
 
