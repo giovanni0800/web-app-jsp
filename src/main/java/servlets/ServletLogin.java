@@ -1,8 +1,10 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import dao.DAOLoginRepository;
+import dao.DAOPhoneRepository;
 import dao.DAOUserRegisterRepository;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelLogin;
+import model.ModelPhone;
 
 /*Servlets or Controllers are same things*/
 @WebServlet(urlPatterns = { "/ServletLogin", "/major-screen/ServletLogin" })
@@ -18,10 +21,14 @@ public class ServletLogin extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private DAOLoginRepository daoLoginRepository = new DAOLoginRepository();
-	private DAOUserRegisterRepository daoUser = new DAOUserRegisterRepository();
+	private DAOLoginRepository daoLoginRepository;
+	private DAOUserRegisterRepository daoUser;
+	private DAOPhoneRepository daoPhone;
 
 	public ServletLogin() {
+		daoLoginRepository = new DAOLoginRepository();
+		daoUser = new DAOUserRegisterRepository();
+		daoPhone = new DAOPhoneRepository();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,18 +63,22 @@ public class ServletLogin extends HttpServlet {
 
 			if (login != null && !login.isEmpty() && password != null && !password.isEmpty()) {
 				ModelLogin modelLogin = new ModelLogin();
+				
 				modelLogin.setLogin(login);
 				modelLogin.setPassword(password);
 
 				if (daoLoginRepository.userAuthentication(modelLogin)) {
-					ModelLogin isUserAdmin = daoUser.consultUserByLogin(modelLogin.getLogin());
+					
+					ModelLogin currentUserInformations = daoUser.consultUserByLogin(modelLogin.getLogin());
+					List<ModelPhone> currentUserPhone = daoPhone.phoneList( currentUserInformations.getId() );
 
 					// Login Part
-					request.getSession().setAttribute("id", daoLoginRepository.returnUserId(modelLogin.getLogin()));
-					request.getSession().setAttribute("user", modelLogin.getLogin().toLowerCase());
-					request.getSession().setAttribute("userImage",
-							daoUser.consultUserByLogin(modelLogin.getLogin()).getUserPhoto());
-					request.getSession().setAttribute("perfil", isUserAdmin.getPerfil());
+					request.getSession().setAttribute("id", currentUserInformations.getId() );
+					request.getSession().setAttribute("user", currentUserInformations.getName() );
+					request.getSession().setAttribute("currentUserInformations", currentUserInformations );
+					request.getSession().setAttribute("currentUserPhone", currentUserPhone.get(0).getNumberPhone() );
+					request.getSession().setAttribute("userImage", currentUserInformations.getUserPhoto() );
+					request.getSession().setAttribute("perfil", currentUserInformations.getPerfil());
 					/*
 					 * HERE IS POSSIBLE MAKE A VALIDATION TO SHOW FIELDS OF CUSTOMER BASE ONLY TO
 					 * ADMINS PERFILS TOO request.getSession().setAttribute("isAdmin",

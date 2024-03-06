@@ -54,15 +54,15 @@
                               </a>
                               <ul class="show-notification">
                                   <li>
-                                      <h6>Notifications</h6>
+                                      <h6>Solicitations</h6>
                                       <label class="label label-danger">New</label>
                                   </li>
                                   <li class="waves-effect waves-light">
                                       <div class="media">
                                           <img class="d-flex align-self-center img-radius" src="<%= request.getContextPath()%>/assets/images/avatar-2.jpg" alt="Generic placeholder image">
                                           <div class="media-body">
-                                              <h5 class="notification-user"><%= request.getSession().getAttribute("user") %></h5>
-                                              <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                              <h5 class="notification-user">Rebeca</h5>
+                                              <p class="notification-msg">Please, could you add a new user?</p>
                                               <span class="notification-time">30 minutes ago</span>
                                           </div>
                                       </div>
@@ -71,8 +71,8 @@
                                       <div class="media">
                                           <img class="d-flex align-self-center img-radius" src="<%= request.getContextPath()%>/assets/images/avatar-4.jpg" alt="Generic placeholder image">
                                           <div class="media-body">
-                                              <h5 class="notification-user">Joseph William</h5>
-                                              <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                              <h5 class="notification-user">Lia</h5>
+                                              <p class="notification-msg">I need a help! I need to update my employee informations, please.</p>
                                               <span class="notification-time">30 minutes ago</span>
                                           </div>
                                       </div>
@@ -82,7 +82,7 @@
                                           <img class="d-flex align-self-center img-radius" src="<%= request.getContextPath()%>/assets/images/avatar-3.jpg" alt="Generic placeholder image">
                                           <div class="media-body">
                                               <h5 class="notification-user">Sara Soudein</h5>
-                                              <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                              <p class="notification-msg">Hello! Could you see the phone numbers of olivia user? Thank you!</p>
                                               <span class="notification-time">30 minutes ago</span>
                                           </div>
                                       </div>
@@ -105,7 +105,7 @@
                               -->
                               
                                   <li class="waves-effect waves-light">
-                                      <a href="user-profile.html">
+                                      <a href="<%= request.getContextPath() %>/major-screen/profile.jsp">
                                           <i class="ti-user"></i> Profile
                                       </a>
                                   </li>

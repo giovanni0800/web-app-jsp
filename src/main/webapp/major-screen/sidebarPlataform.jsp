@@ -52,12 +52,22 @@
             <ul class="pcoded-submenu">
             	
             	<c:if test="${perfil == 'ADMIN'}">
-	                <li class=" ">
+	                <li class="">
 	                    <a href="<%= request.getContextPath() %>/ServletUserController?action=listUsers" class="waves-effect waves-dark">
 	                        <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
 	                        <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Customer Base</span>
 	                        <span class="pcoded-mcaret"></span>
 	                    </a>
+	                </li>
+                </c:if>
+                
+                <c:if test="${perfil != 'ADMIN'}">
+	                <li class="">
+	                    <div>
+	                        <span class="pcoded-micon"><i class="text-danger fa-solid fa-circle-exclamation fa-fw"></i></span>
+	                        <span class="pcoded-mtext text-danger" data-i18n="nav.basic-components.alert">You have no access to Register</span>
+	                        <span class="pcoded-mcaret"></span>
+	                    </div>
 	                </li>
                 </c:if>
                 

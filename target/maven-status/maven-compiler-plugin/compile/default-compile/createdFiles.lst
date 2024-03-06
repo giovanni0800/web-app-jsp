@@ -3,6 +3,7 @@ filter/FilterAuthentication.class
 servlets/ServletChart.class
 dao/DAOPhoneRepository.class
 dao/DAOChartRepository.class
+util/ReportUtil.class
 connection/SingleConnectionDb.class
 dao/DAOUserRegisterRepository.class
 servlets/ServletLogin.class

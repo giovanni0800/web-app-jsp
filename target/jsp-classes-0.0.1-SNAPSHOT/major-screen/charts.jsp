@@ -78,9 +78,8 @@
 
 															<div class="col-auto">
 																<input id="generate-chart" type="button"
-																	value="Generate-Chart" class="btn mb-2 btn-info btn-disabled btn-grd-disabled"
-																	onmouseover="reportFieldsValidator()"
-																	onclick="generateChar()" disabled>
+																	value="Generate-Chart" class="btn mb-2 btn-info"
+																	onclick="generateChar()">
 															</div>
 														</div>
 
@@ -214,37 +213,6 @@
 		
 		} ); 
 		// END THE END DATE SEARCH-----------------------------------------
-		
-		async function reportFieldsValidator() {
-			var startDateSearcher = document.getElementById("startDate").value;
-			var endDateSearcher = document.getElementById("endDate").value;
-			var printButton = document.getElementById("generate-chart");
-			
-			if ( startDateSearcher.length == 10 && endDateSearcher.length == 10
-					&& startDateSearcher.includes('-') && endDateSearcher.includes('-') ) {
-				printButton.classList.remove("btn-grd-disabled");
-				printButton.classList.remove("btn-disabled");
-				printButton.classList.add("btn-info");
-				printButton.disabled = false;
-
-			} else {
-				printButton.classList.add("btn-grd-disabled");
-				printButton.classList.add("btn-disabled");
-				printButton.classList.remove("btn-info");
-				printButton.disabled = true;
-			}
-
-		}
-		
-		function validateJSON(str) {
-		    try {
-		        JSON.parse(str);
-		        return true;
-		    } catch (error) {
-		        return false;
-		    }
-		}
-
 	
 		var ctx = new Chart(document.getElementById('myChart'));
 		
@@ -285,7 +253,16 @@
 						});
 					
 					} catch(error){
-						alert("There is no data to show.");
+						
+						//If all fields have been filled in or If no fields have been filled in, this alert will appear
+						//Because it means that back end should return a value, and if it doesn't happened, there is no data
+						if( ( ( startDate == null || startDate == "" ) && ( endDate == null || endDate == "" ) ) 
+								|| ( ( startDate != null && startDate != "" ) && ( endDate != null && endDate != "" ) ) ){
+							alert("There is no data to show.");
+						
+						} else {
+							alert("Please, enter a value on both fields or no one to search");
+						}
 					}
 					
 				}

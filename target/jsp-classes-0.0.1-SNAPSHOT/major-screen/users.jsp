@@ -50,7 +50,7 @@
 														action="<%=request.getContextPath()%>/ServletPrintUserReport"
 														method="get" class="form-material">
 														
-														<input type="hidden" name="action" value="printUserReport">
+														<input id="workingWithDataUsers" type="hidden" name="action" value="printUserReport">
 
 														<div class="form-row align-items-center">
 
@@ -71,12 +71,18 @@
 																	<input type="text" class="form-control" value="${ endDate }"
 																		id="end-date-searcher" name="end-date-searcher" placeholder="YYYY-MM-DD">
 																</div>
-																
 															</div>
 
 															<div class="col-auto">
-																<input id="print-report" type="submit" value="Print-Report" class="btn mb-2 btn-disabled" onmouseover="reportFieldsValidator()" disabled>
+																<input id="show-datas-report" type="button" value="Show Datas Report" class="btn mb-2 btn-secondary" 
+																onclick="submitQueryToReceiveDataUsers()">
 															</div>
+															
+															<div class="col-auto">
+																<input id="print-report" type="button" value="Report PDF" class="btn mb-2 btn-dark" 
+																onclick="submitQueryToPrintPDFInformations()">
+															</div>
+															
 														</div>
 
 													</form>
@@ -198,6 +204,16 @@
 
 	<script type="text/javascript">
 	
+	function submitQueryToReceiveDataUsers(){
+		document.getElementById("workingWithDataUsers").value = 'printUserReport';
+		$('#report-form').submit();
+	}
+	
+	function submitQueryToPrintPDFInformations(){
+		document.getElementById("workingWithDataUsers").value = 'printReportPDF';
+		$('#report-form').submit();
+	}
+	
 	// START THE START DATE SEARCH----------------------------------------
 	$( function() { $("#start-date-searcher").datepicker({ 
 			dateFormat: 'yy-mm-dd',
@@ -242,26 +258,6 @@
 	} ); 
 	// END THE END DATE SEARCH-----------------------------------------
 
-		async function reportFieldsValidator() {
-			var startDateSearcher = document.getElementById("start-date-searcher").value;
-			var endDateSearcher = document.getElementById("end-date-searcher").value;
-			var printButton = document.getElementById("print-report");
-			
-			if ( startDateSearcher.length == 10 && endDateSearcher.length == 10
-					&& startDateSearcher.includes('-') && endDateSearcher.includes('-') ) {
-				printButton.classList.remove("btn-grd-disabled");
-				printButton.classList.remove("btn-disabled");
-				printButton.classList.add("btn-dark");
-				printButton.disabled = false;
-
-			} else {
-				printButton.classList.add("btn-grd-disabled");
-				printButton.classList.add("btn-disabled");
-				printButton.classList.remove("btn-dark");
-				printButton.disabled = true;
-			}
-
-		}
 	</script>
 
 </body>

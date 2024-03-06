@@ -5,19 +5,14 @@
 
 ## 🤝️ Business rules
 <p>
-This project is used to allow CRUDs to be carried out with the PostgreSQL SDB for users parameterized in the system, as each user will have a different customer view (only those registered by them), And see some data (through graphs) about the customers parameterized on the platform..</p>
+The WebWorks Tech - User Administration System project aims to carry out CRUD operations for registering, updating, searching and deleting information relating to employees, such as name, email, login, password, phone numbers, among others informations. In addition, it is possible to generate reports with stored users and graphically monitor employees' salary status. To create the App, PostgreSQL tools (database) were used, along with JSP technologies along with JSTL (Java 17), Bootstrap 4.1 and TomCat 10.1.x (Jakarta) libs.</p>
+
+## Tips
+<p>To create a DB with PostgreSQL to project, you must use the sequence of instructions in file commands_sql.txt inthe directory: src/main/java/sql_db_commands/commands_sql.txt</p>
 
 <br />
 
-<p>ATENTION: The project is not fully completed</p>
-
-
-<br/>
 <p align="center">You can access it also in link bellow using user admin and password admin:</p>
-
-<hr/>
-
-<h3 align="center">See More in: (Link Here)</h3>
 
 <hr/>
 
@@ -28,6 +23,7 @@ This project is used to allow CRUDs to be carried out with the PostgreSQL SDB fo
 - [Eclipse](https://eclipseide.org/)
 - [TomCat 10.1.x](https://tomcat.apache.org/download-10.cgi)
 - [PostgreSQL 14.11](https://www.postgresql.org/)
+- [Bootstrap 4.1](https://getbootstrap.com/docs/4.1/getting-started/introduction/)
 
 <br />
 
@@ -40,10 +36,30 @@ This project is used to allow CRUDs to be carried out with the PostgreSQL SDB fo
 <hr />
 
 ## 📚 Libs
-- jakarta
-- java.util.Timer;
-- java.util.TimerTask;
-- javax.swing.JOptionPane.
+- java.sql.Connection;
+- java.sql.DriverManager;
+- java.sql.PreparedStatement;
+- java.sql.ResultSet;
+- java.sql.SQLException;
+- java.util.ArrayList;
+- java.util.List;
+- java.text.SimpleDateFormat;
+- java.time.LocalDate;
+- java.time.temporal.ChronoUnit;
+- java.util.ArrayList;
+- java.util.Date;
+- java.math.BigDecimal;
+- jakarta.servlet.RequestDispatcher;
+- jakarta.servlet.ServletException;
+- jakarta.servlet.annotation.WebServlet;
+- jakarta.servlet.http.HttpServlet;
+- jakarta.servlet.http.HttpServletRequest;
+- jakarta.servlet.http.HttpServletResponse;
+- jakarta.servlet.ServletException;
+- jakarta.servlet.http.Part;
+- jakarta.servlet.annotation.MultipartConfig.
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 <br />
 
