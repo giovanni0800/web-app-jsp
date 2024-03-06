@@ -7,7 +7,7 @@
 <p>
 The WebWorks Tech - User Administration System project aims to carry out CRUD operations for registering, updating, searching and deleting information relating to employees, such as name, email, login, password, phone numbers, among others informations. In addition, it is possible to generate reports with stored users and graphically monitor employees' salary status. To create the App, PostgreSQL tools (database) were used, along with JSP technologies along with JSTL (Java 17), Bootstrap 4.1 and TomCat 10.1.x (Jakarta) libs.</p>
 
-## Tips
+## 🤔️ Hint
 <p>To create a DB with PostgreSQL to project, you must use the sequence of instructions in file commands_sql.txt inthe directory: src/main/java/sql_db_commands/commands_sql.txt</p>
 
 <br />
