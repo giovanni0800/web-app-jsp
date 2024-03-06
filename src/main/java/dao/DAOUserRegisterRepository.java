@@ -1,5 +1,6 @@
 package dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +23,8 @@ public class DAOUserRegisterRepository {
 	}
 
 	public String[] saveNewUserOnDB(ModelLogin modelLogin, Long currentAdminId) {
-		String sqlQuery = "INSERT INTO model_login (login, password, name, email, user_id_definition, perfil, gender, cep, street, number, city, neighborhood, state, userbirthday) "
-				+ "values (lower(?), ?, lower(?), lower(?), ?, upper(?), upper(?), ?, lower(?), ?, lower(?), lower(?), lower(?), ?)";
+		String sqlQuery = "INSERT INTO model_login (login, password, name, email, user_id_definition, perfil, gender, cep, street, number, city, neighborhood, state, userbirthday, monthlyincome) "
+				+ "values (lower(?), ?, lower(?), lower(?), ?, upper(?), upper(?), ?, lower(?), ?, lower(?), lower(?), lower(?), ?, trunc(CAST(? AS numeric), 2) )";
 		String[] messageOfConnection = new String[2];
 		try {
 			PreparedStatement statementQuery = connection.prepareStatement(sqlQuery);
@@ -41,6 +42,7 @@ public class DAOUserRegisterRepository {
 			statementQuery.setString(12, modelLogin.getNeighborhood());
 			statementQuery.setString(13, modelLogin.getState());
 			statementQuery.setString(14, modelLogin.getUserBirthday());
+			statementQuery.setBigDecimal(15, modelLogin.getMonthlyIncome());
 
 			if (loginExists(modelLogin.getLogin()) || emailExists(modelLogin.getEmail())) {
 				messageOfConnection[0] = "User already exists!";
@@ -114,6 +116,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -158,6 +161,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -203,6 +207,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -247,6 +252,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -293,6 +299,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -309,7 +316,7 @@ public class DAOUserRegisterRepository {
 		return modelLogin;
 	}
 
-	public int consultUserByNameToShowInPaginationModal(String name, Long currentAdminId) {
+	public int totalToShowInPaginationModal(String name, Long currentAdminId) {
 		Double howManyPages = 0.0;
 		String sqlQuery = "SELECT count(1) as totalpages FROM model_login WHERE upper(name) like upper(?) AND useradmin is false"
 				+ " AND user_id_definition = ?";
@@ -364,6 +371,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -410,6 +418,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -491,6 +500,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -505,6 +515,57 @@ public class DAOUserRegisterRepository {
 			allUsersInfos = null;
 			System.out.println("\nWe had a problem with the query of all users in DB!\n\n");
 			e.printStackTrace();
+		}
+
+		return allUsersInfos;
+	}
+	
+	public List<ModelLogin> consultAllUsersToReport(Long currentAdminId, String startDate, String endDate, DAOPhoneRepository daoPhones) {
+		List<ModelLogin> allUsersInfos = new ArrayList<ModelLogin>();
+
+		String sqlQuery = "SELECT * FROM model_login WHERE useradmin is false AND user_id_definition = ? AND userbirthday >= ?"
+				+ " AND userbirthday <= ? order by userbirthday;";
+
+		try {
+			PreparedStatement statementQuery = connection.prepareStatement(sqlQuery);
+			statementQuery.setLong(1, currentAdminId);
+			statementQuery.setString(2, startDate);
+			statementQuery.setString(3, endDate);
+			ResultSet resultQuery = statementQuery.executeQuery();
+
+			while (resultQuery.next()) {
+				ModelLogin modelLogin = new ModelLogin();
+				modelLogin.setId(resultQuery.getLong("id"));
+				modelLogin.setName(resultQuery.getString("name"));
+				modelLogin.setEmail(resultQuery.getString("email"));
+				modelLogin.setLogin(resultQuery.getString("login"));
+				modelLogin.setPassword(resultQuery.getString("password"));
+				modelLogin.setUserAdmin(resultQuery.getBoolean("useradmin"));
+				modelLogin.setPerfil(resultQuery.getString("perfil"));
+				modelLogin.setGender(resultQuery.getString("gender"));
+				modelLogin.setCep(resultQuery.getString("cep"));
+				modelLogin.setStreet(resultQuery.getString("street"));
+				modelLogin.setNumber(resultQuery.getString("number"));
+				modelLogin.setCity(resultQuery.getString("city"));
+				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
+				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
+				modelLogin.setUserPhones( daoPhones.phoneList( modelLogin.getId() ) );
+				
+				if( resultQuery.getString("userbirthday") != null ){
+					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
+				} else {
+					modelLogin.setUserBirthday( new Date() );
+				}
+
+				allUsersInfos.add(modelLogin);
+			}
+
+		} catch (Exception e) {
+			allUsersInfos = null;
+			System.out.println("\nWe had a problem with the query of all users to Report in DB!\n\n");
+			e.printStackTrace();
+			System.out.println( e.getMessage() );
 		}
 
 		return allUsersInfos;
@@ -536,6 +597,7 @@ public class DAOUserRegisterRepository {
 				modelLogin.setCity(resultQuery.getString("city"));
 				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
 				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
 				
 				if( resultQuery.getString("userbirthday") != null ){
 					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
@@ -635,10 +697,11 @@ public class DAOUserRegisterRepository {
 	public String[] updateUser(ModelLogin modelLogin, Long currentUserId) {
 		String sqlQuery = "UPDATE model_login SET login = lower(?), password = ?, name = lower(?),"
 				+ " email = lower(?), user_id_definition = ?, perfil = upper(?), gender = upper(?), cep = ?,"
-				+ " street = lower(?), number = ?, city = lower(?), neighborhood = lower(?), state = lower(?), userbirthday = ?"
+				+ " street = lower(?), number = ?, city = lower(?), neighborhood = lower(?), state = lower(?), userbirthday = ?,"
+				+ " monthlyincome = trunc(CAST(? AS numeric), 2)"
 				+ " WHERE upper(email) = upper(?) OR upper(login) = upper(?)";
 		String[] messageOfConnection = new String[2];
-
+		
 		try {
 			PreparedStatement statementQuery = connection.prepareStatement(sqlQuery);
 			statementQuery.setString(1, modelLogin.getLogin());
@@ -655,11 +718,12 @@ public class DAOUserRegisterRepository {
 			statementQuery.setString(12, modelLogin.getNeighborhood());
 			statementQuery.setString(13, modelLogin.getState());
 			statementQuery.setString(14, modelLogin.getUserBirthday() );
+			statementQuery.setBigDecimal(15, modelLogin.getMonthlyIncome());
 
 			// HERE IS THE VALIDATION PART - THE DB WILL SEARCH FOR THE E-MAIL AND LOGIN
 			// PASSED FOR USER
-			statementQuery.setString(15, modelLogin.getEmail());
-			statementQuery.setString(16, modelLogin.getLogin());
+			statementQuery.setString(16, modelLogin.getEmail());
+			statementQuery.setString(17, modelLogin.getLogin());
 
 			if (loginExists(modelLogin.getLogin()) || emailExists(modelLogin.getEmail())) {
 				statementQuery.execute();

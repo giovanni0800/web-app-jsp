@@ -170,6 +170,16 @@
 																value="${modelLogin.email}" autocomplete="off">
 															<span class="form-bar"></span> <label class="float-label">e-MAIL</label>
 														</div>
+														
+														<br />
+
+														<!-- Wage with Mask Money -->
+														<div class="form-group form-info form-static-label">
+															<input type="text" name="wage" class="form-control"
+																required="required" id="wage"
+																value="${modelLogin.monthlyIncome}">
+															<span class="form-bar"></span> <label class="float-label">WAGE R$</label>
+														</div>
 
 														<br />
 

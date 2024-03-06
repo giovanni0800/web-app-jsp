@@ -1,0 +1,14 @@
+servlets/ServletUserPhones.class
+filter/FilterAuthentication.class
+servlets/ServletChart.class
+dao/DAOPhoneRepository.class
+dao/DAOChartRepository.class
+connection/SingleConnectionDb.class
+dao/DAOUserRegisterRepository.class
+servlets/ServletLogin.class
+dao/DAOLoginRepository.class
+model/ModelPhone.class
+model/ModelLogin.class
+dto/DTOPerfilSalary.class
+servlets/ServletUserController.class
+servlets/ServletPrintUserReport.class

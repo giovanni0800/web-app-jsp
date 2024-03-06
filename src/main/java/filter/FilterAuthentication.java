@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 //Intercepts all requests that come from the project or mapping
-@WebFilter(urlPatterns = {"/major-screen/*"})
+@WebFilter(urlPatterns = {"/major-screen/*", "/"})
 public class FilterAuthentication extends HttpFilter implements Filter {
        
     private static final long serialVersionUID = 1L;
@@ -46,12 +46,14 @@ public class FilterAuthentication extends HttpFilter implements Filter {
 			
 			String userInSession = (String) session.getAttribute("user");
 			Long userId = Long.parseLong( session.getAttribute("id").toString() );
+			String perfil = (String) session.getAttribute("perfil");
 			
 			String currentUrl = requestHttp.getServletPath();
 			
 			//Validating the user attributes and login status
 			if(( userInSession == null || userId == null || 
-					(userInSession != null && userInSession.isEmpty() ) )
+					(userInSession != null && userInSession.isEmpty() ) || 
+					perfil == null || perfil.isEmpty())
 					&& !currentUrl.contains("/major-screen/ServletLogin")) {
 				
 				//Here is to add in url attribute a value to send user again after he do the
@@ -70,6 +72,18 @@ public class FilterAuthentication extends HttpFilter implements Filter {
 			
 			connection.commit();
 		
+		} catch(NullPointerException nullException) {
+			HttpServletRequest requestHttp = (HttpServletRequest) request;
+			String currentUrl = requestHttp.getServletPath();
+			//Here is to add in url attribute a value to send user again after he do the
+			//login.
+			RequestDispatcher redirect = request.getRequestDispatcher("/index.jsp?url=" +
+				currentUrl);
+			request.setAttribute("msg", "Please, login first!");
+			redirect.forward(request, response);
+			
+			return;
+			
 		} catch(Exception ex) {
 			System.out.println("\n\tPROBLEM IN FILTER AUTHENTICATION FILE!!\n\n");
 			ex.printStackTrace();
@@ -80,6 +94,7 @@ public class FilterAuthentication extends HttpFilter implements Filter {
 			
 			try {
 				connection.rollback();
+				
 			} catch(Exception e) {
 				System.out.println("\n\tPROBLEM IN ROLLBACK OF FILTER AUTHENTICATION FILE!!\n\n");
 				e.printStackTrace();

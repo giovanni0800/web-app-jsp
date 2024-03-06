@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class ModelLogin implements Serializable {
 
@@ -26,10 +28,14 @@ public class ModelLogin implements Serializable {
 	private String neighborhood; // = Bairro
 	private String state;
 
+	private BigDecimal monthlyIncome;
+
 	private Date userBirthday;
+	
+	private List<ModelPhone> userPhones;
 
 	public String getUserBirthday() {
-		return new SimpleDateFormat("yyyy-MM-dd").format( userBirthday );
+		return new SimpleDateFormat("yyyy-MM-dd").format(userBirthday);
 	}
 
 	public void setUserBirthday(Date userBirthday) {
@@ -166,6 +172,28 @@ public class ModelLogin implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public BigDecimal getMonthlyIncome() {
+		return monthlyIncome;
+	}
+
+	public void setMonthlyIncome(BigDecimal monthlyIncome) {
+		this.monthlyIncome = monthlyIncome;
+	}
+	
+	public void setUserPhones(List<ModelPhone> listOfPhones) {
+		this.userPhones = listOfPhones;
+	}
+	
+	public String getUserPhones(){
+		String listOfUserPhones = "";
+		
+		for(ModelPhone currentUserPhone : userPhones) {
+			listOfUserPhones += " ---> " + currentUserPhone.getNumberPhone();
+		}
+		
+		return listOfUserPhones;
 	}
 
 	@Override

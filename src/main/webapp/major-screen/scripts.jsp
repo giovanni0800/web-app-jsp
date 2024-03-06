@@ -54,8 +54,22 @@
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script type="text/javascript">
+<!-- Path to Mask Money Jquery -->
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery-maskmoney@3.0.2/dist/jquery.maskMoney.min.js"></script>
 
+<script type="text/javascript">
+	
+	// START Od Formating the Wage Field to BRL
+	$("#wage").maskMoney({
+		prefix:'R$ ', 
+		thousands:'.', 
+		decimal:',',
+		precision: 2
+	}).maskMoney('mask');
+	// END Of Formating the wage field to BRL
+	
+	// START THE CALENDAR TO SEE THE USER AGE----------------------------------------
 	$( function() {
 		  
 		  $("#userBirthday").datepicker({
@@ -74,8 +88,9 @@
 		// START OF CALENDAR SETTINGS
 		var today = new Date().toISOString().split('T')[0];
 		document.getElementById("userBirthday").setAttribute("max", today);
-		// END OF CALENDAR SETTINGS
+		// END OF CALENDAR SETTINGS----------------------------------------
 	} );
+	// END THE CALENDAR TO SEE THE USER AGE
 
 	$("#cep").keypress(function (event) {
 		return /\d/.test(String.fromCharCode(event.keyCode) );
@@ -107,17 +122,6 @@
 		}
 	}
 	
-	//e-Mail Validation
-	function isEmail(email){
-		var validation = new RegExp(/^[A-Za-z0-9_\-\.]+@[A-Za-z0-9_\-\.]{2,}\.[A-Za-z0-9]{2,}(\.[A-Za-z0-9])?/);
-		if( !validation.test(email) ) {
-			return false;
-		
-		} else {
-			return true;
-		}
-	}
-	
 	async function phoneFieldValidator(){
 		var buttonSave = document.querySelector("input#saveNumber-button");
 		var buttonUpdate = document.querySelector("input#updateNumber-button");
@@ -146,6 +150,17 @@
 			buttonUpdate.disabled = false;
 		}
 		
+	}
+	
+	//e-Mail Validation
+	function isEmail(email){
+		var validation = new RegExp(/^[A-Za-z0-9_\-\.]+@[A-Za-z0-9_\-\.]{2,}\.[A-Za-z0-9]{2,}(\.[A-Za-z0-9])?/);
+		if( !validation.test(email) ) {
+			return false;
+		
+		} else {
+			return true;
+		}
 	}
 
 	//Create a alert to enter a value in all fields to user! and make the button disabled

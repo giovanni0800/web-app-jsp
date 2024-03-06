@@ -152,7 +152,7 @@
     <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Record</div>
     <ul class="pcoded-item pcoded-left-item">
         <li>
-            <a href="form-elements-component.html" class="waves-effect waves-dark">
+            <a href="<%= request.getContextPath() %>/major-screen/users.jsp" class="waves-effect waves-dark">
                 <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
                 <span class="pcoded-mtext" data-i18n="nav.form-components.main">Users</span>
                 <span class="pcoded-mcaret"></span>
@@ -174,7 +174,7 @@
     <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Chart</div>
     <ul class="pcoded-item pcoded-left-item">
         <li>
-            <a href="chart.html" class="waves-effect waves-dark">
+            <a href="<%= request.getContextPath() %>/major-screen/charts.jsp" class="waves-effect waves-dark">
                 <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
                 <span class="pcoded-mtext" data-i18n="nav.form-components.main">Charts</span>
                 <span class="pcoded-mcaret"></span>
@@ -268,7 +268,7 @@
             </ul>
         </li>
     </ul>
+    -->
 </div>
--->
  
  
