@@ -36,12 +36,15 @@ public class ServletChart extends HttpServlet {
 				String startDate = request.getParameter("startDate");
 				String endDate = request.getParameter("endDate");
 
-				if (startDate == null || startDate.isEmpty() || endDate == null || endDate.isEmpty()) {
-					request.setAttribute("status", "text-danger");
-					request.setAttribute("msg", "Unable to show chart because some date is empty!");
-					request.getRequestDispatcher("major-screen/charts.jsp").forward(request, response);
+				if ( ( startDate == null || startDate.isEmpty() ) && ( endDate == null || endDate.isEmpty() ) ) {
+					dtoPerfilSalary = daoChart.showTheAverageSalaryGraph(userInSystem);
+					
+					ObjectMapper mapper = new ObjectMapper();
+					String jsonDatas = mapper.writeValueAsString( dtoPerfilSalary );
+					
+					response.getWriter().write( jsonDatas );
 				
-				} else {
+				} else if ( ( startDate != null && !startDate.isEmpty() ) && ( endDate != null && !endDate.isEmpty() ) ) {
 					dtoPerfilSalary = daoChart.showTheAverageSalaryGraph( userInSystem, startDate, endDate );
 					
 					if( dtoPerfilSalary.getAverageSalaryClients().size() == 0 || dtoPerfilSalary.getPerfilList().size() == 0 ) {
@@ -56,6 +59,10 @@ public class ServletChart extends HttpServlet {
 						response.getWriter().write( jsonDatas );
 					}
 					
+				} else {
+					request.setAttribute("status", "text-danger");
+					request.setAttribute("msg", "Please, enter a value on both fields or no one to search!");
+					request.getRequestDispatcher("major-screen/charts.jsp").forward(request, response);
 				}
 
 			} else {

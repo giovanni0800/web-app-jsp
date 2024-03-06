@@ -520,6 +520,61 @@ public class DAOUserRegisterRepository {
 		return allUsersInfos;
 	}
 	
+	public List<ModelLogin> consultAllUsersToReport(Long currentAdminId, DAOPhoneRepository daoPhones) {
+		List<ModelLogin> allUsersInfos = new ArrayList<ModelLogin>();
+
+		String sqlQuery = "SELECT * FROM model_login WHERE useradmin is false AND user_id_definition = ?"
+				+ " order by userbirthday;";
+
+		try {
+			PreparedStatement statementQuery = connection.prepareStatement(sqlQuery);
+			statementQuery.setLong(1, currentAdminId);
+			ResultSet resultQuery = statementQuery.executeQuery();
+
+			while (resultQuery.next()) {
+				ModelLogin modelLogin = new ModelLogin();
+				modelLogin.setId(resultQuery.getLong("id"));
+				modelLogin.setName(resultQuery.getString("name"));
+				modelLogin.setEmail(resultQuery.getString("email"));
+				modelLogin.setLogin(resultQuery.getString("login"));
+				modelLogin.setPassword(resultQuery.getString("password"));
+				modelLogin.setUserAdmin(resultQuery.getBoolean("useradmin"));
+				modelLogin.setPerfil(resultQuery.getString("perfil"));
+				modelLogin.setGender(resultQuery.getString("gender"));
+				modelLogin.setCep(resultQuery.getString("cep"));
+				modelLogin.setStreet(resultQuery.getString("street"));
+				modelLogin.setNumber(resultQuery.getString("number"));
+				modelLogin.setCity(resultQuery.getString("city"));
+				modelLogin.setNeighborhood(resultQuery.getString("neighborhood"));
+				modelLogin.setState(resultQuery.getString("state"));
+				modelLogin.setMonthlyIncome( BigDecimal.valueOf( resultQuery.getDouble("monthlyincome") ) );
+				modelLogin.setUserPhones( daoPhones.phoneList( modelLogin.getId() ) );
+				
+				if( resultQuery.getString("userbirthday") != null ){
+					modelLogin.setUserBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(resultQuery.getString("userbirthday")));
+				} else {
+					modelLogin.setUserBirthday( new Date() );
+				}
+
+				allUsersInfos.add(modelLogin);
+			}
+
+		} catch(NullPointerException nullException) {
+			
+			//Here is to add in url attribute a value to send user again after he do the
+			//login.
+			System.out.println("\nReturning user to nidex page!\n\n");
+			
+		} catch (Exception e) {
+			allUsersInfos = null;
+			System.out.println("\nWe had a problem with the query of all users to Report in DB!\n\n");
+			e.printStackTrace();
+			System.out.println( e.getMessage() );
+		}
+
+		return allUsersInfos;
+	}
+	
 	public List<ModelLogin> consultAllUsersToReport(Long currentAdminId, String startDate, String endDate, DAOPhoneRepository daoPhones) {
 		List<ModelLogin> allUsersInfos = new ArrayList<ModelLogin>();
 
@@ -561,6 +616,12 @@ public class DAOUserRegisterRepository {
 				allUsersInfos.add(modelLogin);
 			}
 
+		} catch(NullPointerException nullException) {
+			
+			//Here is to add in url attribute a value to send user again after he do the
+			//login.
+			System.out.println("\nReturning user to nidex page!\n\n");
+			
 		} catch (Exception e) {
 			allUsersInfos = null;
 			System.out.println("\nWe had a problem with the query of all users to Report in DB!\n\n");

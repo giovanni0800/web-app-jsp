@@ -74,13 +74,13 @@
 															</div>
 
 															<div class="col-auto">
-																<input id="show-datas-report" type="button" value="Show Datas Report" class="btn mb-2 btn-disabled" 
-																onmouseover="reportFieldsValidator()" onclick="submitQueryToReceiveDataUsers()" disabled>
+																<input id="show-datas-report" type="button" value="Show Datas Report" class="btn mb-2 btn-secondary" 
+																onclick="submitQueryToReceiveDataUsers()">
 															</div>
 															
 															<div class="col-auto">
-																<input id="print-report" type="button" value="Report PDF" class="btn mb-2 btn-disabled" 
-																onmouseover="reportFieldsValidator()" onclick="submitQueryToPrintPDFInformations()" disabled>
+																<input id="print-report" type="button" value="Report PDF" class="btn mb-2 btn-dark" 
+																onclick="submitQueryToPrintPDFInformations()">
 															</div>
 															
 														</div>
@@ -258,37 +258,6 @@
 	} ); 
 	// END THE END DATE SEARCH-----------------------------------------
 
-		async function reportFieldsValidator() {
-			var startDateSearcher = document.getElementById("start-date-searcher").value;
-			var endDateSearcher = document.getElementById("end-date-searcher").value;
-			var showDatasButton = document.getElementById("show-datas-report");
-			var printButton = document.getElementById("print-report");
-			
-			if ( startDateSearcher.length == 10 && endDateSearcher.length == 10
-					&& startDateSearcher.includes('-') && endDateSearcher.includes('-') ) {
-				printButton.classList.remove("btn-grd-disabled");
-				printButton.classList.remove("btn-disabled");
-				printButton.classList.add("btn-dark");
-				printButton.disabled = false;
-				
-				showDatasButton.classList.remove("btn-grd-disabled");
-				showDatasButton.classList.remove("btn-disabled");
-				showDatasButton.classList.add("btn-secondary");
-				showDatasButton.disabled = false;
-
-			} else {
-				printButton.classList.add("btn-grd-disabled");
-				printButton.classList.add("btn-disabled");
-				printButton.classList.remove("btn-dark");
-				printButton.disabled = true;
-				
-				showDatasButton.classList.add("btn-grd-disabled");
-				showDatasButton.classList.add("btn-disabled");
-				showDatasButton.classList.remove("btn-secondary");
-				showDatasButton.disabled = true;
-			}
-
-		}
 	</script>
 
 </body>

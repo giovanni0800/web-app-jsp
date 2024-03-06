@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.ModelLogin;
+import util.ReportUtil;
 
 @WebServlet(urlPatterns = { "/ServletPrintUserReport" })
 public class ServletPrintUserReport extends HttpServlet {
@@ -24,7 +25,6 @@ public class ServletPrintUserReport extends HttpServlet {
 		daoPhone = new DAOPhoneRepository();
 	}
 
-	@SuppressWarnings("null")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -37,10 +37,21 @@ public class ServletPrintUserReport extends HttpServlet {
 			if ( action != null && !action.isEmpty() && action.equalsIgnoreCase("printUserReport") ) {
 				String startDate = request.getParameter("start-date-searcher");
 				String endDate = request.getParameter("end-date-searcher");
+				
+				List<ModelLogin> listOfUsers = null;
 
-				if ((startDate != null || !startDate.isEmpty()) && (endDate != null || !endDate.isEmpty())) {
+				if ( ( startDate == null || startDate.isEmpty() ) && ( endDate == null || endDate.isEmpty() ) ) {
 
-					List<ModelLogin> listOfUsers = daoUser.consultAllUsersToReport(currentUserInSystem, startDate,
+					listOfUsers = daoUser.consultAllUsersToReport(currentUserInSystem, daoPhone);
+					
+					request.setAttribute("listOfUsers", listOfUsers);
+					request.setAttribute("howManyUsers", listOfUsers.size());
+					request.setAttribute("status", "text-success");
+					request.setAttribute("msg", "Research done!");
+
+				} else if( ( startDate != null && !startDate.isEmpty() ) && ( endDate != null && !endDate.isEmpty() ) ) {
+					
+					listOfUsers = daoUser.consultAllUsersToReport(currentUserInSystem, startDate,
 							endDate, daoPhone);
 
 					request.setAttribute("startDate", startDate);
@@ -49,16 +60,39 @@ public class ServletPrintUserReport extends HttpServlet {
 					request.setAttribute("howManyUsers", listOfUsers.size());
 					request.setAttribute("status", "text-success");
 					request.setAttribute("msg", "Research done!");
-
+					
 				} else {
 					request.setAttribute("status", "text-danger");
-					request.setAttribute("msg", "You must choose two dates to continue the search!");
+					request.setAttribute("msg", "Please, enter a value on both fields or no one to search!");
 				}
 
 				request.getRequestDispatcher("major-screen/users.jsp").forward(request, response);
 
 			} else if ( action != null && !action.isEmpty() && action.equalsIgnoreCase("printReportPDF") ) {
-				// KEEP GOING FROM HERE!!!
+				String startDate = request.getParameter("start-date-searcher");
+				String endDate = request.getParameter("end-date-searcher");
+				
+				List<ModelLogin> allUsersInformations = null;
+				
+				if( ( startDate == null || startDate.isEmpty() ) && ( endDate == null || endDate.isEmpty() ) ) {
+					
+					allUsersInformations = daoUser.consultAllUsersToReport(currentUserInSystem, daoPhone);
+					
+				} else if( ( startDate != null && !startDate.isEmpty() ) && ( endDate != null && !endDate.isEmpty() ) ) {
+					
+					allUsersInformations = daoUser.consultAllUsersToReport(currentUserInSystem, startDate, endDate, daoPhone);
+					
+				} else {
+					request.setAttribute("status", "text-danger");
+					request.setAttribute("msg", "Please, enter a value on both fields or no one to search!");
+					request.getRequestDispatcher("major-screen/users.jsp").forward(request, response);
+					return;
+				}
+				
+				byte[] report  = new ReportUtil().generateReportPDF(allUsersInformations, "report-user-jsp", request.getServletContext() );
+				
+				response.setHeader("Content-Disposition", "attachment;filename=usersInformationsPDF");
+				response.getOutputStream().write(report);
 				
 			} else {
 				request.setAttribute("status", "text-danger");
